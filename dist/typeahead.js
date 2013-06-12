@@ -307,7 +307,6 @@
                 dataType: o.dataType || "json",
                 beforeSend: o.beforeSend,
                 crossDomain: o.crossDomain,
-                jsonp: o.jsonp || true,
                 jsonpCallback: o.jsonpCallback
             };
             this._get = (/^throttle$/i.test(o.rateLimitFn) ? utils.throttle : utils.debounce)(this._get, o.rateLimitWait || 300);

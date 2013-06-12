@@ -33,7 +33,6 @@ var Transport = (function() {
       dataType: o.dataType || 'json',
       beforeSend: o.beforeSend,
       crossDomain: o.crossDomain,
-      jsonp: o.jsonp || true,
       jsonpCallback: o.jsonpCallback
     };
 
