@@ -305,7 +305,9 @@
                 cache: o.cache,
                 timeout: o.timeout,
                 dataType: o.dataType || "json",
-                beforeSend: o.beforeSend
+                beforeSend: o.beforeSend,
+                crossDomain: o.crossDomain,
+                jsonpCallback: o.jsonpCallback
             };
             this._get = (/^throttle$/i.test(o.rateLimitFn) ? utils.throttle : utils.debounce)(this._get, o.rateLimitWait || 300);
         }
@@ -392,6 +394,7 @@
             this.itemHash = {};
             this.adjacencyList = {};
             this.storage = o.name ? new PersistentStorage(o.name) : null;
+            this.allowDuplicates = o.allowDuplicates || false;
         }
         utils.mixin(Dataset.prototype, {
             _processLocalData: function(data) {
@@ -532,7 +535,7 @@
                     suggestions = suggestions.slice(0);
                     utils.each(data, function(i, datum) {
                         var item = that._transformDatum(datum), isDuplicate;
-                        isDuplicate = utils.some(suggestions, function(suggestion) {
+                        isDuplicate = that.allowDuplicates ? false : utils.some(suggestions, function(suggestion) {
                             return item.value === suggestion.value;
                         });
                         !isDuplicate && suggestions.push(item);
